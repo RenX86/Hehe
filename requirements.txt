@@ -7,7 +7,7 @@ Flask-Mail
 email-validator
 python-dotenv
 Werkzeug
-SQLAlchemy=
+SQLAlchemy
 psycopg2-binary
 Flask-Bcrypt
 gunicorn
