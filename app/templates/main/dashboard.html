@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="mb-2" style="font-size: 36px;">Welcome, {{ current_user.username }}!</h1>
+    <p class="text-muted mb-5" style="font-size: 15px;">You are now logged in to your account</p>
+    
+    <div class="d-grid gap-3">
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-dark">Logout</a>
+    </div>
+</div>
+{% endblock %} 

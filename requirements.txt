@@ -1,0 +1,14 @@
+Flask
+Flask-SQLAlchemy
+Flask-Login
+Flask-Migrate
+Flask-WTF
+Flask-Mail
+email-validator
+python-dotenv
+Werkzeug
+SQLAlchemy=
+psycopg2-binary
+Flask-Bcrypt
+gunicorn
+gevent

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title text-center mb-4 text-light">Login</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} text-center">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" action="{{ url_for('auth.login') }}">
+            <div class="mb-3">
+                <label for="login" class="form-label text-light">Email or Username</label>
+                <input type="text" class="form-control" id="login" name="login" 
+                       required placeholder="Enter your email or username">
+            </div>
+            
+            <div class="mb-3">
+                <label for="password" class="form-label text-light">Password</label>
+                <input type="password" class="form-control" id="password" name="password" 
+                       required placeholder="Enter your password">
+            </div>
+            
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+        
+        <div class="text-center mt-3">
+            <p class="text-light">Don't have an account? <a href="{{ url_for('auth.register') }}" class="text-primary">Register here</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Dark mode input styles */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: var(--bs-light);
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: var(--bs-light);
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Placeholder color */
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Alert styling */
+.alert {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--bs-light);
+}
+</style>
+{% endblock %} 
