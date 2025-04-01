@@ -5,7 +5,8 @@ from app.models.user import User
 from app import db
 from app.utils.email import send_verification_email
 from app.utils.security import (
-    sanitize_input, sanitize_email, validate_password, sanitize_verification_code
+    sanitize_input, sanitize_email, validate_password, 
+    sanitize_verification_code, validate_email_domain
 )
 from datetime import datetime
 from sqlalchemy.exc import OperationalError
@@ -29,6 +30,12 @@ def register():
             is_valid_password, password_message = validate_password(password)
             if not is_valid_password:
                 flash(password_message, 'error')
+                return redirect(url_for('auth.register'))
+            
+            # Validate email domain
+            is_valid_domain, domain_message = validate_email_domain(email)
+            if not is_valid_domain:
+                flash(domain_message, 'error')
                 return redirect(url_for('auth.register'))
             
             # Debug print

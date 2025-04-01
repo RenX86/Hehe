@@ -31,6 +31,19 @@ def sanitize_email(email):
     email = email.strip().lower()
     return email
 
+def validate_email_domain(email):
+    """Validate that the email domain is allowed (Gmail or ProtonMail)."""
+    if not email or '@' not in email:
+        return False, "Invalid email format"
+    
+    allowed_domains = ['gmail.com', 'protonmail.com', 'proton.me', 'pm.me']
+    domain = email.split('@')[1].lower()
+    
+    if domain not in allowed_domains:
+        return False, f"Only Gmail and ProtonMail email addresses are allowed. Got: {domain}"
+    
+    return True, "Email domain is valid"
+
 def validate_password(password):
     """Validate password strength."""
     if not password:

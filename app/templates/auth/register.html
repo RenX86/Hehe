@@ -5,14 +5,6 @@
     <div class="card-body">
         <h2 class="card-title text-center mb-4 text-light">Register</h2>
         
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        
         <form method="POST" action="{{ url_for('auth.register') }}" onsubmit="return validateForm()">
             <div class="mb-3">
                 <label for="username" class="form-label text-light">Username</label>
@@ -22,7 +14,17 @@
             
             <div class="mb-3">
                 <label for="email" class="form-label text-light">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" required
+                       pattern="[a-zA-Z0-9._%+-]+@(gmail\.com|protonmail\.com|proton\.me|pm\.me)$">
+                <div class="form-text text-light-emphasis">
+                    Only Gmail and ProtonMail addresses are accepted:
+                    <ul class="mb-0 domain-list">
+                        <li>username@gmail.com</li>
+                        <li>username@protonmail.com</li>
+                        <li>username@proton.me</li>
+                        <li>username@pm.me</li>
+                    </ul>
+                </div>
             </div>
             
             <div class="mb-3">
@@ -52,9 +54,15 @@
 </div>
 
 <style>
-.requirements-list {
+.requirements-list, .domain-list {
     list-style-type: none;
     padding-left: 0;
+}
+
+.domain-list li {
+    opacity: 0.8;
+    margin: 0.25rem 0;
+    font-size: 0.875rem;
 }
 
 .requirement {
@@ -92,6 +100,18 @@
 </style>
 
 <script>
+function validateEmail() {
+    const email = document.getElementById('email').value;
+    const allowedDomains = ['gmail.com', 'protonmail.com', 'proton.me', 'pm.me'];
+    
+    if (!email || email.indexOf('@') === -1) {
+        return false;
+    }
+    
+    const domain = email.split('@')[1].toLowerCase();
+    return allowedDomains.includes(domain);
+}
+
 function validatePassword() {
     const password = document.getElementById('password').value;
     const requirements = {
@@ -112,14 +132,35 @@ function validatePassword() {
 }
 
 function validateForm() {
+    let isValid = true;
+    
     if (!validatePassword()) {
         alert('Please ensure your password meets all requirements.');
-        return false;
+        isValid = false;
     }
-    return true;
+    
+    if (!validateEmail()) {
+        alert('Please use a Gmail or ProtonMail email address.');
+        isValid = false;
+    }
+    
+    return isValid;
 }
 
-// Add event listener for password input
-document.getElementById('password').addEventListener('input', validatePassword);
+// Add event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordInput = document.getElementById('password');
+    const emailInput = document.getElementById('email');
+    
+    passwordInput.addEventListener('input', validatePassword);
+    emailInput.addEventListener('input', function() {
+        const isValid = validateEmail();
+        if (isValid) {
+            emailInput.setCustomValidity('');
+        } else {
+            emailInput.setCustomValidity('Please use a Gmail or ProtonMail email address.');
+        }
+    });
+});
 </script>
 {% endblock %}

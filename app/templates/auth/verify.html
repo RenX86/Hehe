@@ -5,14 +5,6 @@
     <div class="card-body">
         <h2 class="card-title text-center mb-4 text-light">Verify Your Email</h2>
         
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} text-center">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        
         <p class="text-light text-center mb-4">
             Please enter your email and the 6-digit verification code we sent you.
         </p>
@@ -78,13 +70,6 @@
 /* Placeholder color */
 .form-control::placeholder {
     color: rgba(255, 255, 255, 0.3);
-}
-
-/* Alert styling */
-.alert {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--bs-light);
 }
 </style>
 
