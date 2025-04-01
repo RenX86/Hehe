@@ -1,4 +1,4 @@
-# Hehe App - Digital Collection Manager
+# Hehe App v2 - Digital Collection Manager
 
 ![Hehe App](https://img.shields.io/badge/Hehe%20App-v2.0-blue)
 ![Flask](https://img.shields.io/badge/Flask-2.0.1-green)
@@ -29,7 +29,7 @@ A modern Flask web application for managing digital collections with a focus on 
 
 ## 🚀 Live Demo
 
-Visit [Hehe App Demo](https://hehe-rz8a.onrender.com/) to see the application in action.
+Visit [Hehe App v2 Demo](https://hehe-app-v2.example.com) to see the application in action.
 
 ## 💻 Tech Stack
 
