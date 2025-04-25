@@ -1,7 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from app.models.work import Work
-from app.models.artist import Artist
 from sqlalchemy import desc, and_, func
 from collections import defaultdict
 from sqlalchemy.orm import joinedload, load_only
