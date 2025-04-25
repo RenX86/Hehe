@@ -1,77 +1,77 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="card">
-    <div class="card-body">
-        <h2 class="card-title text-center mb-4 text-light">Verify Your Email</h2>
-        
-        <p class="text-light text-center mb-4">
-            Please enter your email and the 6-digit verification code we sent you.
-        </p>
-        
-        <form method="POST" action="{{ url_for('auth.verify') }}">
-            <div class="mb-3">
-                <label for="email" class="form-label text-light">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" 
-                       required placeholder="Enter your email">
-            </div>
+<div class="verify-container">
+    <div class="card verify-card">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Verify Your Email</h2>
             
-            <div class="mb-4">
-                <label for="code" class="form-label text-light">Verification Code</label>
-                <input type="text" class="form-control verification-input text-center" 
-                       id="code" name="code" required pattern="[0-9]{6}" maxlength="6" 
-                       placeholder="000000"
-                       title="Please enter the 6-digit verification code">
-            </div>
-            
-            <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Verify</button>
-            </div>
-        </form>
-        
-        <div class="text-center mt-3">
-            <p class="text-light">
-                Didn't receive the code? 
-                <a href="{{ url_for('auth.resend_code') }}" class="text-primary">Resend code</a>
+            <p class="text-center mb-4">
+                Please enter your email and the 6-digit verification code we sent you.
             </p>
+            
+            <form method="POST" action="{{ url_for('auth.verify') }}">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" name="email" 
+                           required placeholder="Enter your email">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="code" class="form-label">Verification Code</label>
+                    <input type="text" class="form-control verification-input text-center" 
+                           id="code" name="code" required pattern="[0-9]{6}" maxlength="6" 
+                           placeholder="000000"
+                           title="Please enter the 6-digit verification code">
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Verify</button>
+                </div>
+            </form>
+            
+            <div class="text-center mt-3">
+                <p>
+                    Didn't receive the code? 
+                    <a href="{{ url_for('auth.resend_code') }}" class="text-primary">Resend code</a>
+                </p>
+            </div>
         </div>
     </div>
 </div>
 
 <style>
-/* Dark mode input styles */
-.form-control {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.15);
-    color: var(--bs-light);
-}
-
-.form-control:focus {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.25);
-    color: var(--bs-light);
-}
-
-.card {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
-/* Verification code input styling */
-.verification-input {
-    font-family: monospace;
-    font-size: 1.5rem;
-    letter-spacing: 0.5rem;
-    max-width: 200px;
+.verify-container {
+    max-width: 480px;
     margin: 0 auto;
-    padding-left: 1rem;
+    padding: 2rem 1rem;
 }
 
-/* Placeholder color */
-.form-control::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+.verify-card {
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.verification-input {
+    letter-spacing: 0.5em;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.verification-input:focus {
+    background-color: var(--input-bg);
+    border-color: var(--border-focus);
+    box-shadow: none;
+    color: var(--text-color);
 }
 </style>
+{% endblock %}
 
 <script>
 // Auto-format verification code input
@@ -98,4 +98,3 @@ window.addEventListener('load', function() {
     }
 });
 </script>
-{% endblock %} 

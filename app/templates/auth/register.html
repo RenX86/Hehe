@@ -1,166 +1,97 @@
 {% extends "base.html" %}
 
+{% block title %}Register{% endblock %}
+
 {% block content %}
-<div class="card">
-    <div class="card-body">
-        <h2 class="card-title text-center mb-4 text-light">Register</h2>
-        
-        <form method="POST" action="{{ url_for('auth.register') }}" onsubmit="return validateForm()">
-            <div class="mb-3">
-                <label for="username" class="form-label text-light">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required 
-                       pattern="[a-zA-Z0-9\s.,!?-]+" title="Only letters, numbers, and basic punctuation allowed">
+<div class="register-container">
+    <div class="card register-card">
+        <div class="card-body">
+            <div class="text-center mb-4">
+                <h2 class="card-title mb-2">Create Account</h2>
+                <p class="text-muted">Join our community today</p>
             </div>
             
-            <div class="mb-3">
-                <label for="email" class="form-label text-light">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" required
-                       pattern="[a-zA-Z0-9._%+-]+@(gmail\.com|protonmail\.com|proton\.me|pm\.me)$">
-                <div class="form-text text-light-emphasis">
-                    Only Gmail and ProtonMail addresses are accepted:
-                    <ul class="mb-0 domain-list">
-                        <li>username@gmail.com</li>
-                        <li>username@protonmail.com</li>
-                        <li>username@proton.me</li>
-                        <li>username@pm.me</li>
-                    </ul>
+            <form method="POST" id="register-form" class="register-form">
+                <div class="mb-3 input-group-custom">
+                    <div class="input-icon">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" class="form-control custom-input" id="username" name="username" 
+                               required placeholder="Username">
+                        <label for="username">Username</label>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="mb-3">
-                <label for="password" class="form-label text-light">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-                <div class="form-text text-light-emphasis">
-                    Password must contain:
-                    <ul class="mb-0 requirements-list">
-                        <li id="length" class="requirement text-light">At least 8 characters</li>
-                        <li id="uppercase" class="requirement text-light">One uppercase letter</li>
-                        <li id="lowercase" class="requirement text-light">One lowercase letter</li>
-                        <li id="number" class="requirement text-light">One number</li>
-                        <li id="special" class="requirement text-light">One special character (!@#$%^&*(),.?":{}|<>)</li>
-                    </ul>
+                
+                <div class="mb-3 input-group-custom">
+                    <div class="input-icon">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                    <div class="form-floating">
+                        <input type="email" class="form-control custom-input" id="email" name="email" 
+                               required placeholder="Email address">
+                        <label for="email">Email address</label>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Register</button>
-            </div>
-        </form>
-        
-        <div class="text-center mt-3">
-            <p class="text-light">Already have an account? <a href="{{ url_for('auth.login') }}" class="text-primary">Login here</a></p>
+                
+                <div class="mb-3 input-group-custom">
+                    <div class="input-icon">
+                        <i class="bi bi-lock"></i>
+                    </div>
+                    <div class="form-floating password-field">
+                        <input type="password" class="form-control custom-input" id="password" name="password" 
+                               required placeholder="Password">
+                        <label for="password">Password</label>
+                        <button type="button" class="password-toggle" onclick="togglePassword('password', 'toggleIcon1')" title="Toggle password visibility">
+                            <i class="bi bi-eye-slash" id="toggleIcon1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-4 input-group-custom">
+                    <div class="input-icon">
+                        <i class="bi bi-lock-fill"></i>
+                    </div>
+                    <div class="form-floating password-field">
+                        <input type="password" class="form-control custom-input" id="confirm_password" name="confirm_password" 
+                               required placeholder="Confirm Password">
+                        <label for="confirm_password">Confirm Password</label>
+                        <button type="button" class="password-toggle" onclick="togglePassword('confirm_password', 'toggleIcon2')" title="Toggle password visibility">
+                            <i class="bi bi-eye-slash" id="toggleIcon2"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <small class="text-muted domain-info">
+                        <i class="bi bi-info-circle"></i>
+                        Only @gmail.com, @protonmail.com, and @proton.me emails are accepted.
+                    </small>
+                </div>
+                
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary register-button">
+                        <i class="bi bi-person-plus me-2"></i>Create Account
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+{% endblock %}
 
-<style>
-.requirements-list, .domain-list {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.domain-list li {
-    opacity: 0.8;
-    margin: 0.25rem 0;
-    font-size: 0.875rem;
-}
-
-.requirement {
-    opacity: 0.8;
-    margin: 0.25rem 0;
-}
-
-.requirement.valid {
-    color: var(--bs-success) !important;
-    opacity: 1;
-}
-
-.requirement.invalid {
-    color: var(--bs-danger) !important;
-    opacity: 1;
-}
-
-/* Dark mode input styles */
-.form-control {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.15);
-    color: var(--bs-light);
-}
-
-.form-control:focus {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.25);
-    color: var(--bs-light);
-}
-
-.card {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.15);
-}
-</style>
 
 <script>
-function validateEmail() {
-    const email = document.getElementById('email').value;
-    const allowedDomains = ['gmail.com', 'protonmail.com', 'proton.me', 'pm.me'];
+function togglePassword(fieldId, iconId) {
+    const passwordField = document.getElementById(fieldId);
+    const toggleIcon = document.getElementById(iconId);
     
-    if (!email || email.indexOf('@') === -1) {
-        return false;
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.classList.replace('bi-eye-slash', 'bi-eye');
+    } else {
+        passwordField.type = 'password';
+        toggleIcon.classList.replace('bi-eye', 'bi-eye-slash');
     }
-    
-    const domain = email.split('@')[1].toLowerCase();
-    return allowedDomains.includes(domain);
 }
-
-function validatePassword() {
-    const password = document.getElementById('password').value;
-    const requirements = {
-        'length': password.length >= 8,
-        'uppercase': /[A-Z]/.test(password),
-        'lowercase': /[a-z]/.test(password),
-        'number': /\d/.test(password),
-        'special': /[!@#$%^&*(),.?":{}|<>]/.test(password)
-    };
-    
-    for (const [id, isValid] of Object.entries(requirements)) {
-        const element = document.getElementById(id);
-        element.classList.remove('valid', 'invalid');
-        element.classList.add(isValid ? 'valid' : 'invalid');
-    }
-    
-    return Object.values(requirements).every(Boolean);
-}
-
-function validateForm() {
-    let isValid = true;
-    
-    if (!validatePassword()) {
-        alert('Please ensure your password meets all requirements.');
-        isValid = false;
-    }
-    
-    if (!validateEmail()) {
-        alert('Please use a Gmail or ProtonMail email address.');
-        isValid = false;
-    }
-    
-    return isValid;
-}
-
-// Add event listeners
-document.addEventListener('DOMContentLoaded', function() {
-    const passwordInput = document.getElementById('password');
-    const emailInput = document.getElementById('email');
-    
-    passwordInput.addEventListener('input', validatePassword);
-    emailInput.addEventListener('input', function() {
-        const isValid = validateEmail();
-        if (isValid) {
-            emailInput.setCustomValidity('');
-        } else {
-            emailInput.setCustomValidity('Please use a Gmail or ProtonMail email address.');
-        }
-    });
-});
 </script>
-{% endblock %}
